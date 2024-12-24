@@ -64,6 +64,13 @@ class Demowebshop(unittest.TestCase):
         browser.find_element(By.ID, 'postal-code').send_keys('16433')
         browser.find_element(By.ID, 'continue').click()
 
+        # Invoice of Purchasing
+        browser.find_element(By.ID, 'finish').click()
+
+        # Verify Notification
+        WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID, 'checkout_complete_container')))
+
+
         #link_element = browser.find_element(By.XPATH, "//a[@href]")
         #href_value = link_element.get_attribute('href')
         #WebDriverWait(browser, 10).until(EC.title_contains('All Items'))
