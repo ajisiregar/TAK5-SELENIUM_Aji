@@ -1,21 +1,37 @@
 import unittest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support import expected_conditions as EC
 
 class Demowebshop(unittest.TestCase):
-
+    
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        # Create an instance of ChromeOptions
+        chrome_options = Options()
 
-    def test_login_success(self):
+        # If Chrome is installed in a non-default location, specify the path to the browser
+        chrome_options.binary_location = "C:/Program Files/Google/Chrome/Application/chrome.exe"  # Adjust this path if necessary
+
+        # Create a Service object for the chromedriver
+        service = Service(ChromeDriverManager().install())
+
+        # Initialize WebDriver (Make sure the WebDriver is installed and added to PATH)
+        self.browser = webdriver.Chrome(service=service, options=chrome_options)
+        # Specify path if necessary
+        self.browser.maximize_window()
+    
+    def test_Login_success(self):
         browser = self.browser
-        self.assertIn('',self.browser.title)
-        self.browser.get('https://demowebshop.tricentis.com/')
-        browser.find_element(By.CLASS_NAME, 'ico-login').click()
-        browser.find_element(By.NAME, 'Email').send_keys('ajiiregar@gmail.com')
-        browser.find_element(By.NAME, 'Password').send_keys('qwerty123')
-        browser.find_element(By.CLASS_NAME, 'button-1.login-button').click()
+        browser.get('https://www.saucedemo.com/')
+        browser.find_element(By.ID, 'user-name').click()
+        browser.find_element(By.ID, 'user-name').send_keys('standard_user')
+        browser.find_element(By.ID, 'password').send_keys('secret_sauce')
+        browser.find_element(By.ID, 'login-button').click()
 
 
 if __name__ == '__main__':
